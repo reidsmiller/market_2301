@@ -87,4 +87,26 @@ RSpec.describe Market do
       expect(@market.overstocked_items).to eq([@item1])
     end
   end
+
+  describe '#iteration 4' do
+    it 'can sell items' do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+
+      expect(@market.sell(@item2, 10)).to be false
+      expect(@market.sell(@item1, 3)).to be true
+      expect(@vendor1.check_stock(@item1)).to eq(32)
+    end
+
+    it 'takes from second vendor if first is out' do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+
+      expect(@market.sell(@item1, 40)).to be true
+      expect(@vendor1.check_stock(@item1)).to eq(0)
+      expect(@vendor3.check_stock(@item1)).to eq(60)
+    end
+  end
 end
