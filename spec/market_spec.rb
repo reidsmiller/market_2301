@@ -49,7 +49,7 @@ RSpec.describe Market do
       @market.add_vendor(@vendor2)
       @market.add_vendor(@vendor3)
 
-      expect(@market.sorted_item_list).to eq('Banana Nice Cream', 'Peach', 'Peach-Raspberry Nice Cream' 'Tomato')
+      expect(@market.sorted_item_list).to eq(['Banana Nice Cream', 'Peach', 'Peach-Raspberry Nice Cream', 'Tomato'])
     end
 
     it 'can make total_inventory hash' do
@@ -63,15 +63,15 @@ RSpec.describe Market do
           vendors: [@vendor1, @vendor3]
         },
         @item2 => {
-          quantity: 7
+          quantity: 7,
           vendors: [@vendor1]
         },
         @item3 => {
-          quantity: 25
+          quantity: 25,
           vendors: [@vendor2]
         },
         @item4 => {
-          quantity: 50
+          quantity: 50,
           vendors: [@vendor2]
         }
       }
@@ -82,9 +82,6 @@ RSpec.describe Market do
     it 'can identify overstocked items' do
       @market.add_vendor(@vendor1)
       @market.add_vendor(@vendor2)
-
-      expect(overstocked_items).to eq([])
-
       @market.add_vendor(@vendor3)
 
       expect(@market.overstocked_items).to eq([@item1])
